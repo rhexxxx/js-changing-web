@@ -1,0 +1,4 @@
+const kubus = {
+    judul : "Kubus",
+    
+};
