@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image" href="./asset/Logo.jpg" />
+</head>
+<body>
+    <main class="app" id="app">
+        <div class="page-shell">
+            <header class="hero">
+                <h1 aria-label="Bangun Ruang Seru!">
+                    <span>B</span><span>a</span><span>n</span><span>g</span><span>u</span><span>n</span>
+                    <span>R</span><span>u</span><span>a</span><span>n</span><span>g</span>
+                    <span>S</span><span>e</span><span>r</span><span>u</span><span>!</span>
+                </h1>
+                <p>Pilih bangun ruang, isi angkanya, lalu lihat jawabannya!</p>
+            </header>
+
+            <nav class="shape-tabs" id="shape-tabs" aria-label="Pilih bangun ruang"></nav>
+
+            <section class="calculator-card">
+                <div class="shape-intro">
+                    <div class="icon-disc" id="icon-disc"></div>
+                    <div>
+                        <h2 id="shape-title"></h2>
+                        <p id="shape-description"></p>
+                        <p id="shape-example"></p>
+                    </div>
+                </div>
+
+                <form id="calculator-form">
+                    <div id="number-fields"></div>
+
+                    <div class="select-grid" id="select-grid">
+                        <label class="field">
+                            <span>Satuan panjang</span>
+                            <select id="unit">
+                                <option value="cm">cm (sentimeter)</option>
+                                <option value="m">m (meter)</option>
+                                <option value="mm">mm (milimeter)</option>
+                            </select>
+                        </label>
+
+                        <label class="field" id="pi-field">
+                            <span>Nilai π (pi)</span>
+                            <select id="pi-mode">
+                                <option value="22/7">22/7</option>
+                                <option value="math">3,14159</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <button class="calculate-button" type="submit">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m5 19 4.5-4.5M14.5 5.5l4-2-2 4M10 14c-1.7-3.5.3-7.7 7-9 1.1 6.7-3.1 8.7-7 9Z"></path>
+                            <path d="M7 17c-2 0-3.5 1-4 4 3 0 4-1.5 4-4Z"></path>
+                        </svg>
+                        Hitung Sekarang!
+                    </button>
+                </form>
+
+                <div class="result" id="result" role="status" hidden>
+                    <span id="result-label"></span>
+                    <strong id="result-value"></strong>
+                </div>
+            </section>
+
+            <p class="tip">
+                <strong>Tip:</strong> bangun ruang yang melengkung (bola, kerucut, tabung)
+                memakai π, sedangkan kubus tidak.
+            </p>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
