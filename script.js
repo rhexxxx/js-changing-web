@@ -1,76 +1,68 @@
 // DATA BANGUN RUANG
-// Array untuk menyimpan data empat bangun ruang.
-// Setiap bangun ruang disimpan dalam bentuk object.
+// Array shapes digunakan untuk menyimpan data dari setiap bangun ruang.
+// Setiap bangun ruang memiliki id, nama, deskripsi, contoh, warna, dan input yang dibutuhkan.
 const shapes = [
     {
-        id: "cube", // Identitas bangun ruang
-        label: "Kubus", // Nama yang ditampilkan
-        description: "Semua sisinya berbentuk persegi dan sama panjang.",
-        example: "Contohnya dadu!",
-        color: "#ed8fac", // Warna bangun ruang
-
-        // Input yang diperlukan untuk menghitung volume kubus
+        id: "cube", // Identitas bangun ruang kubus
+        label: "Kubus", // Nama yang ditampilkan pada halaman
+        description: "Semua sisinya berbentuk persegi dan sama panjang.", // Penjelasan kubus
+        example: "Contohnya dadu!", // Contoh benda berbentuk kubus
+        color: "#ed8fac", // Warna khusus untuk kubus
         fields: [
             {
-                key: "side",
-                label: "Panjang sisi (s)",
-                placeholder: "Isi panjang sisi"
+                key: "side", // Nama variabel untuk panjang sisi
+                label: "Panjang sisi (s)", // Teks label input
+                placeholder: "Isi panjang sisi" // Petunjuk pada kolom input
             }
         ]
     },
     {
-        id: "sphere",
+        id: "sphere", // Identitas bangun ruang bola
         label: "Bola",
         description: "Permukaannya melengkung dan semua titiknya sama jauh dari pusat.",
         example: "Contohnya bola basket!",
         color: "#8bd5ed",
-
-        // Bola hanya membutuhkan input jari-jari
         fields: [
             {
-                key: "radius",
+                key: "radius", // Nama variabel untuk jari-jari
                 label: "Jari-jari (r)",
                 placeholder: "Isi jari-jari"
             }
         ]
     },
     {
-        id: "cone",
+        id: "cone", // Identitas bangun ruang kerucut
         label: "Kerucut",
         description: "Memiliki alas berbentuk lingkaran dan satu titik puncak.",
         example: "Contohnya topi ulang tahun!",
         color: "#ffc76d",
-
-        // Kerucut membutuhkan jari-jari dan tinggi
         fields: [
             {
-                key: "radius",
+                key: "radius", // Input jari-jari alas kerucut
                 label: "Jari-jari (r)",
                 placeholder: "Isi jari-jari"
             },
             {
-                key: "height",
+                key: "height", // Input tinggi kerucut
                 label: "Tinggi (t)",
                 placeholder: "Isi tinggi"
             }
         ]
     },
     {
-        id: "cylinder",
+        id: "cylinder", // Identitas bangun ruang tabung
         label: "Tabung",
         description: "Memiliki dua alas lingkaran yang sama besar dan sejajar.",
         example: "Contohnya kaleng susu!",
         color: "#92dda0",
-
-        // Tabung membutuhkan jari-jari dan tinggi
         fields: [
             {
-                key: "radius",
+                key: "radius", // Input jari-jari tabung
                 label: "Jari-jari (r)",
                 placeholder: "Isi jari-jari"
             },
             {
-                key: "height",
+                key: "height", // Input tinggi tabung
                 label: "Tinggi (t)",
                 placeholder: "Isi tinggi"
             }
@@ -78,15 +70,14 @@ const shapes = [
     }
 ];
 
-
 // VARIABEL BANGUN RUANG AKTIF
-// Menentukan bangun ruang yang pertama kali dipilih.
-// Nilainya dapat berubah ketika pengguna memilih bangun lain.
+// Menentukan bangun ruang yang pertama kali dipilih saat halaman dibuka.
+// Nilai awalnya adalah "cube", yaitu kubus.
 let activeId = "cube";
 
-
-// MENGAMBIL ELEMEN HTML (DOM)
-// Mengambil elemen HTML berdasarkan ID menggunakan querySelector().
+// MENGAMBIL ELEMEN HTML
+// document.querySelector digunakan untuk mengambil elemen HTML
+// berdasarkan selector atau id yang sudah ditentukan.
 const app = document.querySelector("#app");
 const tabsContainer = document.querySelector("#shape-tabs");
 const form = document.querySelector("#calculator-form");
@@ -95,14 +86,14 @@ const selectGrid = document.querySelector("#select-grid");
 const piField = document.querySelector("#pi-field");
 const result = document.querySelector("#result");
 
-
-// FUNGSI MEMBUAT IKON BANGUN RUANG
-// Membuat gambar bangun ruang menggunakan SVG.
+// FUNGSI MENAMPILKAN IKON BANGUN RUANG
+// Fungsi shapeIcon digunakan untuk membuat gambar SVG
+// berdasarkan jenis bangun ruang yang dipilih.
 // Parameter type menentukan jenis bangun ruang.
-// Parameter size menentukan ukuran gambar, default 72.
+// Parameter size menentukan ukuran ikon, dengan nilai awal 72.
 function shapeIcon(type, size = 72) {
 
-    // Object untuk menyimpan kode SVG setiap bangun ruang.
+    // Object icons menyimpan kode gambar SVG untuk setiap bangun ruang.
     const icons = {
         cube: `
             <path d="M18 27 40 15l22 12-22 13Z" fill="#fff"/>
@@ -125,7 +116,10 @@ function shapeIcon(type, size = 72) {
         `
     };
 
-    // Mengembalikan kode SVG sesuai jenis dan ukuran yang dipilih.
+    // Mengembalikan kode SVG sesuai jenis bangun ruang yang dipilih.
+    // Template literal (`) digunakan agar kode HTML dan SVG bisa ditulis dalam beberapa baris.
+    // ${size} digunakan untuk memasukkan ukuran ikon.
+    // ${icons[type]} digunakan untuk memasukkan gambar sesuai jenis bangun ruang.
     return `
         <svg
             width="${size}"
@@ -142,68 +136,65 @@ function shapeIcon(type, size = 72) {
     `;
 }
 
-
 // FUNGSI MENYEMBUNYIKAN HASIL
-// Menyembunyikan hasil perhitungan dari halaman.
+// Fungsi hideResult digunakan untuk menyembunyikan
+// bagian hasil perhitungan dengan mengubah properti hidden menjadi true.
 function hideResult() {
     result.hidden = true;
 }
 
-
-// FUNGSI MEMBUAT TOMBOL BANGUN RUANG
-// Membuat tombol pilihan bangun ruang secara otomatis.
+// FUNGSI MENAMPILKAN TOMBOL BANGUN RUANG
+// Fungsi renderTabs digunakan untuk menampilkan tombol pilihan bangun ruang.
 function renderTabs() {
 
-    // map() digunakan untuk membaca setiap data bangun ruang.
-    // Hasilnya dibuat menjadi tombol HTML.
+    // map() digunakan untuk mengulang setiap data bangun ruang dalam array shapes.
+    // Setiap data dibuat menjadi sebuah tombol HTML.
+    // Ternary operator digunakan untuk menentukan apakah tombol sedang aktif.
+    // join("") digunakan untuk menggabungkan seluruh tombol menjadi satu string HTML.
     tabsContainer.innerHTML = shapes.map(shape => `
         <button
             type="button"
-
-            // Menambahkan class active jika tombol sedang dipilih.
             class="shape-tab${shape.id === activeId ? " active" : ""}"
-
-            // Menyimpan ID bangun ruang pada tombol.
             data-shape="${shape.id}"
-
-            // Mengatur warna tombol sesuai data bangun ruang.
             style="--shape-color: ${shape.color}"
-
-            // Menandai tombol yang sedang aktif.
             aria-pressed="${shape.id === activeId}"
         >
             ${shapeIcon(shape.id, 58)}
             <span>${shape.label}</span>
         </button>
-    `).join(""); // Menggabungkan seluruh hasil menjadi satu HTML.
+    `).join("");
 }
 
-
-// FUNGSI MENAMPILKAN INFORMASI BANGUN RUANG
+// FUNGSI MENAMPILKAN DETAIL BANGUN RUANG
+// Fungsi renderShape digunakan untuk menampilkan informasi
+// dan kolom input sesuai bangun ruang yang sedang dipilih.
 function renderShape() {
 
-    // Mencari data bangun ruang berdasarkan ID yang sedang aktif.
+    // find() digunakan untuk mencari data bangun ruang
+    // yang memiliki id sama dengan activeId.
     const shape = shapes.find(item => item.id === activeId);
 
-    // Mengubah judul, deskripsi, dan contoh pada halaman HTML.
+    // Mengubah judul, deskripsi, dan contoh sesuai bangun ruang yang dipilih.
     document.querySelector("#shape-title").textContent = shape.label;
     document.querySelector("#shape-description").textContent = shape.description;
     document.querySelector("#shape-example").textContent = shape.example;
 
-    // Mengambil tempat untuk menampilkan ikon bangun ruang.
+    // Mengambil elemen tempat ikon bangun ruang ditampilkan.
     const iconDisc = document.querySelector("#icon-disc");
 
-    // Mengubah warna latar belakang ikon.
+    // Mengubah warna latar ikon sesuai warna bangun ruang.
     iconDisc.style.background = shape.color;
 
-    // Menampilkan gambar bangun ruang sesuai pilihan.
+    // Menampilkan ikon bangun ruang ke dalam elemen HTML.
     iconDisc.innerHTML = shapeIcon(shape.id, 96);
 
-    // Mengatur tampilan input.
-    // Jika input lebih dari satu, menggunakan tampilan grid.
+    // Mengatur tampilan kolom input.
+    // Jika input lebih dari satu, gunakan class field-grid.
+    // Jika hanya satu, class dikosongkan.
     numberFields.className = shape.fields.length > 1 ? "field-grid" : "";
 
-    // Membuat input secara otomatis berdasarkan data fields.
+    // Membuat kolom input secara otomatis berdasarkan data fields.
+    // map() mengulang setiap input yang dibutuhkan.
     numberFields.innerHTML = shape.fields.map(field => `
         <label class="field">
             <span>${field.label}</span>
@@ -220,136 +211,143 @@ function renderShape() {
         </label>
     `).join("");
 
-    // Memeriksa apakah bangun ruang yang dipilih adalah kubus.
+    // Mengecek apakah bangun ruang yang dipilih adalah kubus.
     const isCube = activeId === "cube";
 
-    // Menyembunyikan pilihan nilai pi jika memilih kubus.
+    // Menyembunyikan pilihan nilai phi jika bangun ruang adalah kubus.
     piField.hidden = isCube;
 
-    // Mengatur pilihan satuan menjadi satu kolom jika kubus dipilih.
+    // Mengatur tampilan pilihan berdasarkan jenis bangun ruang.
     selectGrid.classList.toggle("single", isCube);
 
     // Menyembunyikan hasil perhitungan sebelumnya.
     hideResult();
 }
 
-
-// EVENT LISTENER UNTUK PILIHAN BANGUN RUANG
-// Mendeteksi ketika pengguna mengklik pilihan bangun ruang.
+// EVENT LISTENER UNTUK TOMBOL BANGUN RUANG
+// addEventListener("click") digunakan untuk mendeteksi
+// ketika pengguna mengklik salah satu tombol bangun ruang.
 tabsContainer.addEventListener("click", event => {
 
-    // Mencari tombol terdekat yang memiliki atribut data-shape.
+    // closest() mencari tombol dengan atribut data-shape
+    // dari elemen yang diklik atau elemen induknya.
     const button = event.target.closest("[data-shape]");
 
-    // Jika tombol tidak ditemukan atau tombol yang sama dipilih,
-    // maka proses dihentikan.
+    // Jika elemen yang diklik bukan tombol bangun ruang
+    // atau tombol yang dipilih sudah aktif, hentikan fungsi.
     if (!button || button.dataset.shape === activeId) {
         return;
     }
 
-    // Mengubah bangun ruang aktif sesuai tombol yang diklik.
+    // Mengubah activeId sesuai tombol bangun ruang yang diklik.
     activeId = button.dataset.shape;
 
-    // Memperbarui tombol pilihan dan informasi bangun ruang.
+    // Memperbarui tampilan tombol pilihan bangun ruang.
     renderTabs();
+
+    // Memperbarui informasi dan kolom input bangun ruang.
     renderShape();
 });
 
-
-// EVENT LISTENER UNTUK PERUBAHAN INPUT
-// Menyembunyikan hasil ketika pengguna mengetik atau mengubah input.
+// EVENT LISTENER PADA FORM INPUT
+// Ketika pengguna mengubah isi input,
+// hasil perhitungan sebelumnya akan disembunyikan.
 form.addEventListener("input", hideResult);
 
-// Menyembunyikan hasil ketika pengguna mengubah pilihan pada form.
+// Ketika pengguna mengubah pilihan pada form,
+// hasil perhitungan sebelumnya juga akan disembunyikan.
 form.addEventListener("change", hideResult);
 
-
 // EVENT LISTENER UNTUK PROSES PERHITUNGAN
-// Menjalankan perhitungan ketika form dikirim melalui tombol submit.
+// addEventListener("submit") digunakan untuk menjalankan
+// proses perhitungan ketika form dikirim atau tombol hitung ditekan.
 form.addEventListener("submit", event => {
 
-    // Mencegah halaman melakukan reload ketika form dikirim.
+    // Mencegah halaman melakukan refresh secara otomatis
+    // ketika form dikirim.
     event.preventDefault();
 
-    // Mengambil data bangun ruang yang sedang dipilih.
+    // Mencari data bangun ruang yang sedang dipilih.
     const shape = shapes.find(item => item.id === activeId);
 
-    // Membuat object kosong untuk menyimpan nilai input.
+    // Membuat object kosong untuk menyimpan nilai input pengguna.
     const values = {};
 
-    // Mengambil seluruh nilai input berdasarkan data fields.
+    // Mengambil seluruh nilai input sesuai kebutuhan bangun ruang.
     shape.fields.forEach(field => {
 
-        // Mengambil nilai input HTML dan mengubahnya menjadi angka.
+        // Number() mengubah nilai input yang awalnya berbentuk teks
+        // menjadi tipe data angka agar bisa digunakan dalam perhitungan.
         values[field.key] = Number(
             document.querySelector(`#${field.key}`).value
         );
     });
 
-    // Memeriksa apakah input berupa angka valid dan lebih dari nol.
-    // some() mengecek apakah ada input yang memenuhi kondisi.
+    // Memeriksa apakah nilai input valid.
+    // some() digunakan untuk mengecek apakah ada input yang tidak memenuhi syarat.
+    // Number.isFinite() memastikan nilai merupakan angka yang valid.
+    // Nilai harus lebih besar dari 0.
     if (shape.fields.some(field =>
         !Number.isFinite(values[field.key]) ||
         values[field.key] <= 0
     )) {
-
-        // Menghentikan perhitungan jika input tidak valid.
         return;
     }
 
-    // Mengambil pilihan nilai pi dari pengguna.
-    // Jika memilih 22/7, gunakan pembagian 22 dengan 7.
-    // Jika tidak, gunakan nilai Math.PI.
+    // Menentukan nilai phi yang digunakan dalam perhitungan.
+    // Jika pengguna memilih 22/7, maka nilai phi adalah 22 dibagi 7.
+    // Jika tidak, maka menggunakan nilai Math.PI dari JavaScript.
     const pi = document.querySelector("#pi-mode").value === "22/7"
         ? 22 / 7
         : Math.PI;
 
-    // Menyiapkan variabel untuk menyimpan hasil volume.
+    // Membuat variabel volume dengan nilai awal 0.
+    // Variabel ini akan menyimpan hasil perhitungan volume.
     let volume = 0;
 
-    // Menentukan rumus berdasarkan bangun ruang yang dipilih.
+    // Mengecek jenis bangun ruang dan menjalankan rumus yang sesuai.
 
-    // Rumus volume kubus: sisi pangkat tiga.
+    // Rumus volume kubus = sisi × sisi × sisi.
     if (activeId === "cube") {
         volume = values.side ** 3;
 
-    // Rumus volume bola: 4/3 dikali pi dikali jari-jari pangkat tiga.
+    // Rumus volume bola = 4/3 × phi × jari-jari pangkat 3.
     } else if (activeId === "sphere") {
         volume = (4 / 3) * pi * values.radius ** 3;
 
-    // Rumus volume kerucut: 1/3 dikali pi dikali jari-jari kuadrat dikali tinggi.
+    // Rumus volume kerucut = 1/3 × phi × jari-jari kuadrat × tinggi.
     } else if (activeId === "cone") {
         volume = (1 / 3) * pi * values.radius ** 2 * values.height;
 
-    // Rumus volume tabung: pi dikali jari-jari kuadrat dikali tinggi.
+    // Rumus volume tabung = phi × jari-jari kuadrat × tinggi.
     } else if (activeId === "cylinder") {
         volume = pi * values.radius ** 2 * values.height;
     }
 
-    // Mengambil satuan panjang yang dipilih pengguna.
+    // Mengambil satuan panjang yang dipilih oleh pengguna.
     const unit = document.querySelector("#unit").value;
 
-    // Menampilkan nama bangun ruang pada bagian hasil.
+    // Menampilkan judul hasil perhitungan sesuai nama bangun ruang.
     document.querySelector("#result-label").textContent =
         `Volume ${shape.label}`;
 
-    // Menampilkan hasil volume dengan format angka Indonesia.
-    // Maksimal dua angka di belakang koma.
-    // unit digunakan untuk menampilkan satuan panjang.
-    // sup digunakan untuk membuat angka 3 menjadi pangkat.
+    // Menampilkan hasil perhitungan volume.
+    // Intl.NumberFormat("id-ID") digunakan untuk mengatur format angka Indonesia.
+    // maximumFractionDigits: 2 membatasi angka di belakang koma maksimal 2 digit.
+    // format(volume) mengubah hasil perhitungan menjadi format angka yang mudah dibaca.
+    // <sup>3</sup> digunakan untuk menampilkan angka 3 sebagai pangkat pada satuan volume.
     document.querySelector("#result-value").innerHTML =
         `${new Intl.NumberFormat("id-ID", {
             maximumFractionDigits: 2
         }).format(volume)} ${unit}<sup>3</sup>`;
 
-    // Menampilkan hasil perhitungan pada halaman.
+    // Menampilkan bagian hasil perhitungan setelah proses selesai.
     result.hidden = false;
 });
 
-
-// MENJALANKAN PROGRAM PERTAMA KALI
-// Membuat tombol pilihan bangun ruang ketika halaman dibuka.
+// MENJALANKAN FUNGSI SAAT HALAMAN DIBUKA
+// Menampilkan seluruh tombol pilihan bangun ruang saat halaman pertama kali dibuka.
 renderTabs();
 
-// Menampilkan informasi dan input bangun ruang pertama, yaitu kubus.
+// Menampilkan informasi dan kolom input bangun ruang yang aktif, yaitu kubus.
 renderShape();
