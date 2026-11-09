@@ -8,24 +8,39 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     height: 100vh;
+    padding: 0 30vh;
 }
 
 .card-container{
     display: flex;
-
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 5px solid #FF7171;
     margin: 0.5rem;
-    padding: 0.5rem 3rem;
+    padding: 1rem 2.5rem;
     background-color: #FFF3E3;
     border-radius: 20px;
+    width: 100%;
 }
 
 .card:hover{
+    background-color: #9FA0FF;
+    color: #FFF3E3;
+    transition: ease 0.5s;
+    cursor: pointer;
+}
+
+.active{
     background-color: #9FA0FF;
     color: #FFF3E3;
     transition: ease 0.5s;
@@ -41,6 +56,92 @@
     width: 8vh;
 }
 
+.hidden{
+    display: hidden;
+}
+
+.main-container{
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    border: 5px solid #FF7171;
+    border-radius: 20px;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.information{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 .information img{
     width: 15vh;
+}
+
+.info{
+    margin: 0 2rem;
+}
+
+.info h3{
+    font-size: 2rem;
+}
+
+.input{
+    padding: 0 2rem;
+    font-size: 1.2rem;
+}
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.input-group label{
+    margin-bottom: 0.5rem;
+}
+
+.input-group input{
+    padding: 0.5rem;
+    border: #FF7171 2px solid;
+    border-radius: 10px;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.satuan{
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: #9FA0FF 2px solid;
+}
+
+.hitung{
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #FF7171;
+    color: #FFF3E3;
+    border: #9FA0FF 2px solid;
+}
+
+.hitung:hover{
+    background-color: #9FA0FF;
+    border: #FF7171 2px solid;
+    transition: ease 0.6s;
+    cursor: pointer;
+}
+
+.result{
+    border: #FF7171 3px solid;
+    background-color: rgb(255 113 113/ 0.3);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 20px;
 }

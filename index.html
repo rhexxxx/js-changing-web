@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitung Bangun Ruang</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,33 +13,39 @@
     <div class="body-container">
         <h1>Bangun Ruang Counter</h1>
         <div class="card-container">
-            <div class="card">
+            <div class="card active" id="cardKubus" onclick="selectShape('kubus', this)">
                 <img src="img/cube.png" alt="">
                 <p>Kubus</p>
             </div>
-            <div class="card">
-                <img src="img/cube.png" alt="">
-                <p>Kubus</p>
+            <div class="card" onclick="selectShape('bola', this)">
+                <img src="img/ball.png" alt="">
+                <p>Bola</p>
             </div>
-            <div class="card">
-                <img src="img/cube.png" alt="">
-                <p>Kubus</p>
-            </div>
-            <div class="card">
-                <img src="img/cube.png" alt="">
-                <p>Kubus</p>
+            <div class="card" onclick="selectShape('tabung', this)">
+                <img src="img/tube.png" alt="">
+                <p>Tabung</p>
             </div>
         </div>
         <div class="main-container">
             <div class="information">
-                <img src="img/cube.png" alt="">
+                <img src="img/cube.png" id="img" alt="">
                 <div class="info">
                     <h3 id="title"></h3>
-                    <p id = "desc"></p>
+                    <p id= "desc"></p>
                 </div>
             </div>
-            <div class="input">
-                
+            <div class="input" id="input"> 
+                <div class="result" id="resultDisplay"></div>
+                <div id="dynamicinput"></div>
+                <label for="satuan">Satuan Panjang</label><br>
+                <div class="menu">
+                    <select name="satuan" class="satuan" id="satuan">
+                        <option value="mm">mm(milimeter)</option>
+                        <option value="cm">cm(centimeter)</option>
+                        <option value="m">m(meter)</option>
+                    </select>
+                    <button onclick="Hitung()" class="hitung">Hitung Sekarang!!</button>
+                </div>
             </div>
         </div>
     </div>
