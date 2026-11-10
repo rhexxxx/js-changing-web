@@ -41,6 +41,10 @@ function selectShape(shape, element){
         img.src = "img/tube.png";
         desc.innerHTML = "Dua lingkaran, dibungkus dengan kulit <br> contohnya pipa";
         dynamicInput.innerHTML = '<div class="input-group"><label>Jari - jari (r)</label> <input type="number" id="jari" placeholder="Masukan jari jari"></div><div class="input-group"><label>Tinggi (t)</label><input type="number" id="tinggi" placeholder="masukan tinggi"></div>';
+    } else if(Shape == 'balok'){
+        img.src = "img/balok.png";
+        desc.innerHTML = "terdiri dari panjang, lebar, dan tinggi <br> contohnya papan tulis";
+        dynamicInput.innerHTML = '<div class="input-group"><label>Panjang(p)</label><input type="number" id="panjang" placeholder="Masukan panjang"><label>Lebar(l)</label><input type="number" id="lebar" placeholder="Masukan lebar"><label>Tinggi (t)</label><input type="number" id="tinggi" placeholder="Masukan tinggi"></div>';
     }
 }
 
@@ -68,6 +72,13 @@ function Hitung(){
         if(isNaN(r) || r<=0 || isNaN(t) || t<=0) return alert("Masukan nilai yang sesuai!!!");
         luas = 2 * Math.PI * r * (r+t);
         volume = Math.PI * (r * r) * t;
+    } else if(Shape == 'balok'){
+        let p = parseFloat(document.getElementById('panjang').value);
+        let l = parseFloat(document.getElementById('lebar').value);
+        let t = parseFloat(document.getElementById('tinggi').value);
+        if(isNaN(p) || p<=0 || isNaN(l) || l<=0 || isNaN(t) || t<=0 )return alert("Masukan nilai yang sesuai!!!");
+        luas = 2 * ((p*l) + (p*t) + (l*t));
+        volume = p * l * t;
     }
 
     // menampilkan hasil perhitungan dengan format pangkat 3
